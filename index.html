@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fluxo — Meu Painel</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+
+<aside class="sidebar">
+
+    <div class="logo">
+       Flu<span>xo</span>
+    </div>
+
+    <div class="menu-title">Menu</div>
+
+    <div class="menu">
+
+        <button class="active" data-filter="all" onclick="setFilter('all')">
+             Todas as tarefas
+        </button>
+
+        <button data-filter="pending" onclick="setFilter('pending')">
+             Pendentes
+        </button>
+
+        <button data-filter="completed" onclick="setFilter('completed')">
+             Concluídas
+        </button>
+
+        <button data-filter="today" onclick="setFilter('today')">
+             Hoje
+        </button>
+
+        <button data-filter="overdue" onclick="setFilter('overdue')">
+             Atrasadas
+        </button>
+
+    </div>
+
+    <div class="menu-title">Sistema</div>
+
+    <div class="menu">
+
+        <button onclick="toggleTheme()" aria-label="Alternar tema claro/escuro">
+             Alternar tema
+        </button>
+
+        <button onclick="clearCompleted()">
+             Limpar concluídas
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="mobile-header">
+
+        <h1>Fluxo</h1>
+
+        <button
+            class="theme-btn"
+            onclick="toggleTheme()"
+            aria-label="Alternar tema claro/escuro"
+        >
+            🌙
+        </button>
+
+    </div>
+
+
+    <div class="topbar">
+
+        <div>
+
+            <h1>Meu Painel</h1>
+
+            <p>
+                Organize suas tarefas e acompanhe seu progresso.
+            </p>
+
+        </div>
+
+        <button
+            class="theme-btn"
+            onclick="toggleTheme()"
+        >
+             Modo escuro
+        </button>
+
+    </div>
+
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Total
+            </div>
+
+            <div
+                class="stat-number"
+                id="total"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Pendentes
+            </div>
+
+            <div
+                class="stat-number"
+                id="pending"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Concluídas
+            </div>
+
+            <div
+                class="stat-number"
+                id="completed"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Atrasadas
+            </div>
+
+            <div
+                class="stat-number"
+                id="overdue"
+            >
+                0
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="progress-card">
+
+        <div class="progress-header">
+
+            <strong>
+                Progresso
+            </strong>
+
+            <span id="progressText">
+                0%
+            </span>
+
+        </div>
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                id="progressFill"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <section class="form-card">
+
+        <h2>Adicionar nova tarefa</h2>
+
+        <div class="form-grid">
+
+            <input
+                id="taskInput"
+                type="text"
+                placeholder="Ex: Estudar JavaScript"
+            >
+
+            <input
+                id="dateInput"
+                type="date"
+            >
+
+            <select id="priorityInput">
+
+                <option value="low">
+                    Prioridade baixa
+                </option>
+
+                <option value="medium" selected>
+                    Prioridade média
+                </option>
+
+                <option value="high">
+                    Prioridade alta
+                </option>
+
+            </select>
+
+            <select id="categoryInput">
+
+                <option value="Estudos">
+                    Estudos
+                </option>
+
+                <option value="Trabalho">
+                    Trabalho
+                </option>
+
+                <option value="Pessoal">
+                    Pessoal
+                </option>
+
+                <option value="Projetos">
+                    Projetos
+                </option>
+
+                <option value="Outros">
+                    Outros
+                </option>
+
+            </select>
+
+            <button
+                class="add-btn"
+                onclick="addTask()"
+            >
+                + Adicionar
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <div class="search">
+
+        <input
+            id="searchInput"
+            type="search"
+            placeholder="🔎 Pesquisar tarefas..."
+            oninput="renderTasks()"
+        >
+
+    </div>
+
+
+
+    <div class="filters">
+
+        <button
+            class="filter active"
+            data-filter="all"
+            onclick="setFilter('all')"
+        >
+            Todas
+        </button>
+
+        <button
+            class="filter"
+            data-filter="pending"
+            onclick="setFilter('pending')"
+        >
+            Pendentes
+        </button>
+
+        <button
+            class="filter"
+            data-filter="completed"
+            onclick="setFilter('completed')"
+        >
+            Concluídas
+        </button>
+
+        <button
+            class="filter"
+            data-filter="today"
+            onclick="setFilter('today')"
+        >
+            Hoje
+        </button>
+
+        <button
+            class="filter"
+            data-filter="overdue"
+            onclick="setFilter('overdue')"
+        >
+            Atrasadas
+        </button>
+
+    </div>
+
+
+    <section
+        id="taskList"
+        class="task-list"
+    ></section>
+
+</main>
+
+</div>
+
+
+<div
+    class="modal"
+    id="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+    onclick="if (event.target === this) closeModal()"
+>
+
+    <div class="modal-box">
+
+        <h2 id="modalTitle">Editar tarefa</h2>
+
+        <input
+            id="editTitle"
+            type="text"
+            placeholder="Nome da tarefa"
+        >
+
+        <input
+            id="editDate"
+            type="date"
+        >
+
+        <select id="editPriority">
+
+            <option value="low">
+                Prioridade baixa
+            </option>
+
+            <option value="medium">
+                Prioridade média
+            </option>
+
+            <option value="high">
+                Prioridade alta
+            </option>
+
+        </select>
+
+        <select id="editCategory">
+
+            <option value="Estudos">
+                Estudos
+            </option>
+
+            <option value="Trabalho">
+                Trabalho
+            </option>
+
+            <option value="Pessoal">
+                Pessoal
+            </option>
+
+            <option value="Projetos">
+                Projetos
+            </option>
+
+            <option value="Outros">
+                Outros
+            </option>
+
+        </select>
+
+        <div class="modal-actions">
+
+            <button
+                class="action-btn cancel"
+                onclick="closeModal()"
+            >
+                Cancelar
+            </button>
+
+            <button
+                class="action-btn save"
+                onclick="saveEdit()"
+            >
+                Salvar alterações
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
