@@ -43,7 +43,7 @@ Sim. O layout é responsivo: em telas pequenas, a barra lateral vira um cabeçal
 
 O processo de publicar no GitHub (próxima seção) também pode ser feito inteiramente pelo navegador do celular, sem precisar de computador.
 
-## Tecnologias utilizadas
+## 🛠️ Tecnologias Utilizadas
 
 - HTML5
 - CSS3 (variáveis CSS para o tema claro/escuro, Flexbox e Grid)
