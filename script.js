@@ -6,9 +6,7 @@ function loadTasks() {
 
         const parsed = stored ? JSON.parse(stored) : [];
 
-        // Corrige tarefas antigas/corrompidas que ficaram sem "id".
-        // Sem isso, marcar/editar/excluir essas tarefas não funciona,
-        // pois essas ações dependem do id para encontrar a tarefa certa.
+
         let needsResave = false;
 
         const fixed = parsed.map(task => {
@@ -57,10 +55,7 @@ let draggedId = null;
 
 let lastFocusedElement = null;
 
-
-/* =========================
-   SALVAR
-========================= */
+ 
 
 function saveTasks() {
 
